@@ -1,15 +1,16 @@
+
 // Adiciona um formulário para pegar a data de aniversário via inputs HTML
 document.getElementById("formData").addEventListener("submit", function (e) {
   e.preventDefault();
 
   // Pega os valores dos inputs data de aniversário
-  var diaAniversario = parseInt(document.getElementById("dia").value, 10);
-  var mesAniversario = parseInt(document.getElementById("mes").value, 10);
+  const diaAniversario = parseInt(document.getElementById("dia").value, 10);
+  const mesAniversario = parseInt(document.getElementById("mes").value, 10);
 
   // Data atual do sistema
-  var hojeData = new Date();
-  var diaHoje = hojeData.getDate();
-  var mesAtual = hojeData.getMonth() + 1;
+  const hojeData = new Date();
+  const diaHoje = hojeData.getDate();
+  const mesAtual = hojeData.getMonth() + 1;
 
   // Numero de dias de cada mês em um array
   const diasDoMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
