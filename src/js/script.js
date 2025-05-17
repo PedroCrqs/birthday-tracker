@@ -1,60 +1,58 @@
-
-// Adiciona um formulário para pegar a data de aniversário via inputs HTML
+// Adds a form to get the birthday date via HTML inputs
 document.getElementById("formData").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  // Pega os valores dos inputs data de aniversário
-  const diaAniversario = parseInt(document.getElementById("dia").value, 10);
-  const mesAniversario = parseInt(document.getElementById("mes").value, 10);
+  // Gets the values from the birthday date inputs
+  const birthdayDay = parseInt(document.getElementById("day").value, 10);
+  const birthdayMonth = parseInt(document.getElementById("month").value, 10);
 
-  // Data atual do sistema
-  const hojeData = new Date();
-  const diaHoje = hojeData.getDate();
-  const mesAtual = hojeData.getMonth() + 1;
+  // Current system date
+  const todayDate = new Date();
+  const currentDay = todayDate.getDate();
+  const currentMonth = todayDate.getMonth() + 1;
 
-  // Numero de dias de cada mês em um array
-  const diasDoMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  // Number of days in each month in an array
+  const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-  // Verifica quantos dias faltam para acabar o mês atual
-  function diasRestantesMesAtual() {
-    return diasDoMes[mesAtual - 1] - diaHoje;
+  // Checks how many days are left in the current month
+  function daysLeftInCurrentMonth() {
+    return daysInMonth[currentMonth - 1] - currentDay;
   }
 
-  // Soma todos os dias contidos nos meses entre o mês atual e o mês do aniversário
-  function somarDiasEntreMeses(inicio, fim) {
+  // Sums all the days contained in the months between the current month and the birthday month
+  function sumDaysBetweenMonths(start, end) {
     let total = 0;
-    for (let i = inicio; i < fim; i++) {
-      total += diasDoMes[i];
+    for (let i = start; i < end; i++) {
+      total += daysInMonth[i];
     }
     return total;
   }
 
-  let diasRestantes = 0;
+  let daysLeft = 0;
 
-  //Fórmula final para calcular os dias restantes
-  //Se o aniversário é ainda esse ano
+  // Final formula to calculate the remaining days
+  // If the birthday is still this year
   if (
-    mesAtual < mesAniversario ||
-    (mesAtual === mesAniversario && diaHoje < diaAniversario)
+    currentMonth < birthdayMonth ||
+    (currentMonth === birthdayMonth && currentDay < birthdayDay)
   ) {
-    diasRestantes =
-      diasRestantesMesAtual() +
-      somarDiasEntreMeses(mesAtual, mesAniversario - 1) +
-      diaAniversario;
-  } // Se o aniversário é hoje
-  else if (mesAtual === mesAniversario && diaHoje === diaAniversario) {
-    console.log("Hoje é seu aniversário!");
+    daysLeft =
+      daysLeftInCurrentMonth() +
+      sumDaysBetweenMonths(currentMonth, birthdayMonth - 1) +
+      birthdayDay;
+  } // If today is the birthday
+  else if (currentMonth === birthdayMonth && currentDay === birthdayDay) {
+    console.log("Today is your birthday!");
     return;
-  } // Se o aniversário é no próximo ano
+  } // If the birthday is next year
   else {
-    let diasRestantesAnoAtual =
-      diasRestantesMesAtual() + somarDiasEntreMeses(mesAtual, 12);
-    let diasInicioProximoAno = somarDiasEntreMeses(0, mesAniversario - 1);
-    diasRestantes =
-      diasRestantesAnoAtual + diasInicioProximoAno + diaAniversario;
+    let daysLeftThisYear =
+      daysLeftInCurrentMonth() + sumDaysBetweenMonths(currentMonth, 12);
+    let daysAtStartOfNextYear = sumDaysBetweenMonths(0, birthdayMonth - 1);
+    daysLeft = daysLeftThisYear + daysAtStartOfNextYear + birthdayDay;
   }
 
-  if (diasRestantes > 0) {
-    console.log("Faltam " + diasRestantes + " dias para o seu aniversário!");
+  if (daysLeft > 0) {
+    console.log("There are " + daysLeft + " days left until your birthday!");
   }
 });
