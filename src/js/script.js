@@ -1,10 +1,22 @@
-// Adds a form to get the birthday date via HTML inputs
-document.getElementById("formData").addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  // Gets the values from the birthday date inputs
+function newBirthday() {
+  const name = document.getElementById("name").value;
   const birthdayDay = parseInt(document.getElementById("day").value, 10);
   const birthdayMonth = parseInt(document.getElementById("month").value, 10);
+  const birthdayYear = parseInt(document.getElementById("year").value, 10);
+  const birthday =
+    String(birthdayDay).padStart(2, "0") +
+    "/" +
+    String(birthdayMonth).padStart(2, "0") +
+    "/" +
+    String(birthdayYear).slice(-2);
+  const degreeImportance = parseInt(
+    document.getElementById("degreeImportance").value
+  );
+
+  if (!name || !birthdayDay || !birthdayMonth || !birthdayYear) {
+    alert("Please, fill in all fields.");
+    return;
+  }
 
   // Current system date
   const todayDate = new Date();
@@ -42,7 +54,7 @@ document.getElementById("formData").addEventListener("submit", function (e) {
       birthdayDay;
   } // If today is the birthday
   else if (currentMonth === birthdayMonth && currentDay === birthdayDay) {
-    console.log("Today is your birthday!");
+    document.getElementById("daysLeft").textContent = "Today";
     return;
   } // If the birthday is next year
   else {
@@ -52,7 +64,48 @@ document.getElementById("formData").addEventListener("submit", function (e) {
     daysLeft = daysLeftThisYear + daysAtStartOfNextYear + birthdayDay;
   }
 
-  if (daysLeft > 0) {
-    console.log("There are " + daysLeft + " days left until your birthday!");
-  }
-});
+  // Create a new row in the table with the new birthday information
+  const tableBody = document.getElementById("table-body");
+  const newRow = document.createElement("tr");
+
+  newRow.innerHTML = `
+          <td>${name}</td>
+          <td>${birthday}</td>
+           <td>
+            <select class="status-select">
+              <option value="Friend" ${
+                degreeImportance === "Friend" ? "selected" : ""
+              }>Friend</option>
+              <option value="Familiar" ${
+                degreeImportance === "Familiar" ? "selected" : ""
+              }>Familiar</option>
+              <option value="Family"${
+                degreeImportance === "Family" ? "selected" : ""
+              }>Family</option>
+              <option value="Love"${
+                degreeImportance === "Love" ? "selected" : ""
+              }>Love</option>
+            </select>
+          </td>
+          <td>${daysLeft}</td>
+          <td>    
+          <button class="delete-button" onclick="deleteB(this)">Delete</button>
+          </td>
+        `;
+
+  // Add new row to the table body
+  tableBody.appendChild(newRow);
+
+  // Clean the input fields
+  document.getElementById("name").value = "";
+  document.getElementById("day").value = "";
+  document.getElementById("month").value = "";
+  document.getElementById("year").value = "";
+}
+
+// Delete button function
+function deleteB(button) {
+  // Remove the row corresponding to the clicked button
+  const row = button.parentElement.parentElement;
+  row.remove();
+}

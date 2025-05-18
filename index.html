@@ -6,26 +6,60 @@
     <title>Birthday Tracker</title>
   </head>
   <body>
-    <form id="formData">
-      <input
-        type="number"
-        id="day"
-        placeholder="Day"
-        min="1"
-        max="31"
-        required
-      />
-      <input
-        type="number"
-        id="month"
-        placeholder="Month"
-        min="1"
-        max="12"
-        required
-      />
-      <input type="number" id="year" placeholder="Year" min="1900" required />
-      <button type="submit">Submit</button>
-    </form>
+    <section class="container">
+      <h1>Birthday Tracker</h1>
+      <table class="tableData">
+        <thead>
+          <tr class="table-header">
+            <th>Name</th>
+            <th>Birthday</th>
+            <th>Degree of importance</th>
+            <th>Days left</th>
+          </tr>
+        </thead>
+        <tbody class="table-body" id="table-body">
+          <tr>
+            <td><input type="text" id="name" /></td>
+            <td>
+              <input
+                type="number"
+                id="day"
+                placeholder="Day"
+                min="1"
+                max="31"
+                required
+              />
+              <input
+                type="number"
+                id="month"
+                placeholder="Month"
+                min="1"
+                max="12"
+                required
+              />
+              <input
+                type="number"
+                id="year"
+                placeholder="Year"
+                min="1900"
+                max="2100"
+                required
+              />
+            </td>
+            <td>
+              <select id="degreeImportance">
+                <option value="Friend">Friend</option>
+                <option value="Familiar">Familiar</option>
+                <option value="Family">Family</option>
+                <option value="Love">Love</option>
+              </select>
+            </td>
+            <td id="daysLeft" class="daysLeft"></td>
+            <td><button type="submit" onclick="newBirthday()">Add</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
     <script src="./src/js/script.js"></script>
   </body>
 </html>
