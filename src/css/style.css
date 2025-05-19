@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background-color: black;
+}
+
+td {
+  border: 1px solid #ccc;
+  border-color: white;
+  padding: 8px;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+.fill {
+  text-align: center;
+}
