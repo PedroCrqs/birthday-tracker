@@ -1,4 +1,4 @@
-function newBirthday() {
+const newBirthday = () => {
   const name = document.getElementById("name").value;
   const birthdayDay = parseInt(document.getElementById("day").value, 10);
   const birthdayMonth = parseInt(document.getElementById("month").value, 10);
@@ -9,9 +9,7 @@ function newBirthday() {
     String(birthdayMonth).padStart(2, "0") +
     "/" +
     String(birthdayYear).slice(-2);
-  const degreeImportance = parseInt(
-    document.getElementById("degreeImportance").value
-  );
+  const degreeImportance = document.getElementById("degreeImportance").value;
 
   if (!name || !birthdayDay || !birthdayMonth || !birthdayYear) {
     alert("Please, fill in all fields.");
@@ -27,18 +25,17 @@ function newBirthday() {
   const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
   // Checks how many days are left in the current month
-  function daysLeftInCurrentMonth() {
-    return daysInMonth[currentMonth - 1] - currentDay;
-  }
+  const daysLeftInCurrentMonth = () =>
+    daysInMonth[currentMonth - 1] - currentDay;
 
   // Sums all the days contained in the months between the current month and the birthday month
-  function sumDaysBetweenMonths(start, end) {
+  const sumDaysBetweenMonths = (start, end) => {
     let total = 0;
     for (let i = start; i < end; i++) {
       total += daysInMonth[i];
     }
     return total;
-  }
+  };
 
   let daysLeft = 0;
 
@@ -101,11 +98,10 @@ function newBirthday() {
   document.getElementById("day").value = "";
   document.getElementById("month").value = "";
   document.getElementById("year").value = "";
-}
+};
 
 // Delete button function
-function deleteB(button) {
-  // Remove the row corresponding to the clicked button
+const deleteB = (button) => {
   const row = button.parentElement.parentElement;
   row.remove();
-}
+};
