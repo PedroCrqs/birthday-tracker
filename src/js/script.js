@@ -16,6 +16,45 @@ const welcome = () => {
 
 welcome();
 
+const renderSavedBirthdays = () => {
+  const birthdayList = JSON.parse(localStorage.getItem("birthdayList"));
+  const tableBody = document.getElementById("table-body");
+  if (birthdayList) {
+    birthdayList.forEach((birthday) => {
+      const newRow = document.createElement("tr");
+      newRow.innerHTML = `
+          <td>${birthday.name}</td>
+          <td>${birthday.birthday}</td>
+          <td>
+            <select class="status-select">
+              <option value="Friend" ${
+                birthday.degreeImportance === "Friend" ? "selected" : ""
+              }>Friend</option>
+              <option value="Familiar" ${
+                birthday.degreeImportance === "Familiar" ? "selected" : ""
+              }>Familiar</option>
+              <option value="Family" ${
+                birthday.degreeImportance === "Family" ? "selected" : ""
+              }>Family</option>
+              <option value="Love" ${
+                birthday.degreeImportance === "Love" ? "selected" : ""
+              }>Love</option>
+            </select>
+          </td>
+          <td>${birthday.daysLeft}</td>
+          <td>    
+          <button class="delete-button" data-id="${
+            birthday.id
+          }" onclick="deleteB(this)">Delete</button>
+          </td>
+        `;
+      tableBody.appendChild(newRow);
+    });
+  }
+};
+
+renderSavedBirthdays();
+
 const newBirthday = () => {
   const name = document.getElementById("name").value;
   const birthdayDay = parseInt(document.getElementById("day").value, 10);
@@ -78,6 +117,19 @@ const newBirthday = () => {
   const tableBody = document.getElementById("table-body");
   const newRow = document.createElement("tr");
 
+  const addNewBirthday = {
+    id: Date.now(),
+    name: name,
+    birthday: birthday,
+    degreeImportance: degreeImportance,
+    daysLeft: daysLeft,
+  };
+
+  // Recover the birthday list from local storage or create a new one
+  let birthdayList = JSON.parse(localStorage.getItem("birthdayList")) || [];
+  birthdayList.push(addNewBirthday);
+  localStorage.setItem("birthdayList", JSON.stringify(birthdayList));
+
   newRow.innerHTML = `
           <td>${name}</td>
           <td>${birthday}</td>
@@ -99,7 +151,9 @@ const newBirthday = () => {
           </td>
           <td>${daysLeft}</td>
           <td>    
-          <button class="delete-button" onclick="deleteB(this)">Delete</button>
+          <button class="delete-button" data-id="${
+            addNewBirthday.id
+          }" onclick="deleteB(this)">Delete</button>
           </td>
         `;
 
@@ -115,6 +169,10 @@ const newBirthday = () => {
 
 // Delete button function
 const deleteB = (button) => {
+  const id = parseInt(button.dataset.id, 10);
+  let birthdayList = JSON.parse(localStorage.getItem("birthdayList")) || [];
+  birthdayList = birthdayList.filter((item) => item.id !== id);
+  localStorage.setItem("birthdayList", JSON.stringify(birthdayList));
   const row = button.parentElement.parentElement;
   row.remove();
 };
