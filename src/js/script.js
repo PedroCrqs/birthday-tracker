@@ -1,3 +1,21 @@
+// Current system date
+const todayDate = new Date();
+const currentDay = todayDate.getDate();
+const currentMonth = todayDate.getMonth() + 1;
+
+const welcome = () => {
+  const todayHour = todayDate.getHours();
+
+  if (todayHour >= 0 && todayHour < 12) {
+    return alert("Good morning! Welcome to the birthday tracker!");
+  } else if (todayHour >= 12 && todayHour < 18) {
+    return alert("Good afternoon! Welcome to the birthday tracker!");
+  }
+  return alert("Good evening! Welcome to the birthday tracker!");
+};
+
+welcome();
+
 const newBirthday = () => {
   const name = document.getElementById("name").value;
   const birthdayDay = parseInt(document.getElementById("day").value, 10);
@@ -15,11 +33,6 @@ const newBirthday = () => {
     alert("Please, fill in all fields.");
     return;
   }
-
-  // Current system date
-  const todayDate = new Date();
-  const currentDay = todayDate.getDate();
-  const currentMonth = todayDate.getMonth() + 1;
 
   // Number of days in each month in an array
   const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
